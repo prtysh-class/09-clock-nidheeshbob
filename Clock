@@ -1,0 +1,55 @@
+let px, py;
+let sRadius;
+let mRadius;
+let hRadius;
+let cDiameter;
+
+function setup() {
+  createCanvas(600, 600);
+  
+
+  let radius = min(width, height) / 1.9;
+  sRadius = radius * 0.8;
+  mRadius = radius * 0.6;
+  hRadius = radius * 0.5;
+  cDiameter = radius * 1.75;
+
+  px = width / 2;
+  py = height / 2;
+}
+
+function draw() {
+  
+  ellipse(px,py,60,50)
+  background('BLACK');
+  noStroke();
+  fill('WHITE');
+  ellipse(px, py, cDiameter + 5, cDiameter + 5);
+  fill('black');
+  ellipse(px, py, cDiameter, cDiameter);
+  
+
+
+  let s = map(second(), 0, 60, 0, TWO_PI) - HALF_PI;
+  let m = map(minute() + norm(second(), 0, 60), 0, 60, 0, TWO_PI) - HALF_PI;
+  let h = map(hour() + norm(minute(), 0, 60), 0, 24, 0, TWO_PI * 2) - HALF_PI;
+
+  stroke('orange');
+  strokeWeight(3);
+  line(px, py, px + cos(s) * sRadius, py + sin(s) * sRadius);
+  strokeWeight(6);
+  line(px, py, px + cos(m) * mRadius, py + sin(m) * mRadius);
+  strokeWeight(9);
+  line(px, py, px + cos(h) * hRadius, py + sin(h) * hRadius);
+
+  strokeWeight(5);
+  stroke('white');
+  beginShape(POINTS);
+  for (let a = 0; a < 360; a += 6) {
+    let angle = radians(a);
+    let x = px + cos(angle) * sRadius;
+    let y = py + sin(angle) * sRadius;
+    vertex(x, y);
+  }
+  endShape();
+}
